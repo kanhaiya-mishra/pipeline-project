@@ -8,7 +8,7 @@ def version = "${env.BUILD_NUMBER}.0"
 pipeline {
     agent any
     tools {
-        maven 'Maven M3'
+        maven 'Maven'
     }
     stages {
         stage("checkout") {
@@ -22,7 +22,7 @@ pipeline {
         stage("build") {
             steps {
                 
-                sh 'mvn clean install -DskipTests'
+                sh '/usr/local/bin/mvn clean install -DskipTests'
                 echo 'Building..Pipeline'
                 echo "Pipeline name is ${env.JOB_NAME}"
  				echo "Pipleine run rumber is ${env.BUILD_NUMBER}"
@@ -37,7 +37,7 @@ pipeline {
                snDevOpsArtifact(artifactsPayload:"""{"artifacts": [{"name": "devops_pipeline_demo.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo"}],"stageName": "unit-tests"}""")            
 
                 echo "Unit Test"
-                sh "mvn test"
+                sh "/usr/local/bin/mvn test"
                 sleep 5
 		snDevOpsChange()
 
